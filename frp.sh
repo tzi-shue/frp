@@ -19,14 +19,14 @@ FRP_PATH=/usr/local/frp
 PROXY_URL="https://ghp.ci/"
 
 # check frpc
-if [ -f "/usr/local/frp/${FRP_NAME}" ] || [ -f "/usr/local/frp/${FRP_NAME}.ini" ] || [ -f "/lib/systemd/system/${FRP_NAME}.service" ];then
+if [ -f "/usr/local/frp/${FRP_NAME}" ] || [ -f "/usr/local/frp/${FRP_NAME}.toml" ] || [ -f "/lib/systemd/system/${FRP_NAME}.service" ];then
     echo -e "${Green}=========================================================================${Font}"
     echo -e "${RedBG}当前已退出脚本.${Font}"
     echo -e "${Green}检查到服务器已安装${Font} ${Red}${FRP_NAME}${Font}"
-    echo -e "${Green}请手动确认和删除${Font} ${Red}/usr/local/frp/${Font} ${Green}目录下的${Font} ${Red}${FRP_NAME}${Font} ${Green}和${Font} ${Red}/${FRP_NAME}.ini${Font} ${Green}文件以及${Font} ${Red}/lib/systemd/system/${FRP_NAME}.service${Font} ${Green}文件,再次执行本脚本.${Font}"
+    echo -e "${Green}请手动确认和删除${Font} ${Red}/usr/local/frp/${Font} ${Green}目录下的${Font} ${Red}${FRP_NAME}${Font} ${Green}和${Font} ${Red}/${FRP_NAME}.toml${Font} ${Green}文件以及${Font} ${Red}/lib/systemd/system/${FRP_NAME}.service${Font} ${Green}文件,再次执行本脚本.${Font}"
     echo -e "${Green}参考命令如下:${Font}"
     echo -e "${Red}rm -rf /usr/local/frp/${FRP_NAME}${Font}"
-    echo -e "${Red}rm -rf /usr/local/frp/${FRP_NAME}.ini${Font}"
+    echo -e "${Red}rm -rf /usr/local/frp/${FRP_NAME}.toml${Font}"
     echo -e "${Red}rm -rf /lib/systemd/system/${FRP_NAME}.service${Font}"
     echo -e "${Green}=========================================================================${Font}"
     exit 0
@@ -91,35 +91,40 @@ tar -zxvf ${FILE_NAME}.tar.gz
 mkdir -p ${FRP_PATH}
 mv ${FILE_NAME}/${FRP_NAME} ${FRP_PATH}
 
-# configure frpc.ini
 # 生成随机 6 位字母和数字的服务名
 SERVICE_NAME=$(tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 6)
 
+#生成随机 remote_port（范围：3000到6000）
+REMOTE_PORT_SSH=$((RANDOM % 3001+3000))
+
 # FRP 配置文件路径
-FRP_CONFIG_FILE="frpc.ini"
+FRP_CONFIG_FILE="frpc.toml"
 
-[common]
-# 这里是默认的不可修改
-server_addr = frps.tzishue.tk
-server_port = 7000
-token = 12345
+# 创建或更新 FRP 配置文件
+cat <<EOL > $FRP_CONFIG_FILE
 
-[$SERVICE_NAME-web]
-# 这里是你的服务名，可自由填写，不可重复
-type = http  # 服务类型，有tcp, udp, http, https, stcp, sudp, xtcp, tcpmux
-local_port = 80
-# 你要映射的本地端口，对等映射，公网地址同端口,使用 服务器IP:80 访问 本地IP:80端口
-custom_domains = $SERVICE_NAME.frp.tzishue.tk
-# 访问映射的host名
+serverAddr = "frps.tzishue.tk"
+serverPort = 7000
+auth.method = "token"
+auth.token = "12345"
 
-[$SERVICE_NAME-ssh]
-type = tcp
-local_ip = 127.0.0.1
-local_port = 22
-remote_port = 6000
-# 通过remote_port进行非对等映射，使用 服务器IP:6000 访问 本地IP:22端口
+[[proxies]]
+name = "print-ssh-$SERVICE_NAME"
+type = "tcp"
+localIP = "127.0.0.1"
+localPort = 22
+remotePort = $REMOTE_PORT_SSH
 
-EOF
+[[proxies]]
+name = "print-web-$SERVICE_NAME"
+type = "http"
+localIP = "127.0.0.1"
+localPort = 80
+subdomain = "nas-$SERVICE_NAME"
+#如果你有自己的域名,可以同时打开这行,你的域名要解析到frps服务器
+#customDomains = ["hinas.yourdomain.com"]
+
+EOL
 
 # configure systemd
 cat >/lib/systemd/system/${FRP_NAME}.service <<EOF
@@ -132,7 +137,7 @@ Wants=network.target
 Type=simple
 Restart=on-failure
 RestartSec=5s
-ExecStart=/usr/local/frp/${FRP_NAME} -c /usr/local/frp/${FRP_NAME}.ini
+ExecStart=/usr/local/frp/${FRP_NAME} -c /usr/local/frp/${FRP_NAME}.toml
 
 [Install]
 WantedBy=multi-user.target
@@ -147,8 +152,8 @@ sudo systemctl enable ${FRP_NAME}
 rm -rf ${WORK_PATH}/${FILE_NAME}.tar.gz ${WORK_PATH}/${FILE_NAME} ${FRP_NAME}_linux_install.sh
 
 echo -e "${Green}====================================================================${Font}"
-echo -e "${Green}安装成功,请先修改 ${FRP_NAME}.ini 文件,确保格式及配置正确无误!${Font}"
-echo -e "${Red}vi /usr/local/frp/${FRP_NAME}.ini${Font}"
+echo -e "${Green}安装成功,请先修改 ${FRP_NAME}.toml 文件,确保格式及配置正确无误!${Font}"
+echo -e "${Red}vi /usr/local/frp/${FRP_NAME}.toml${Font}"
 echo -e "${Green}修改完毕后执行以下命令重启服务:${Font}"
 echo -e "${Red}sudo systemctl restart ${FRP_NAME}${Font}"
 echo -e "${Green}====================================================================${Font}"
