@@ -92,8 +92,10 @@ mkdir -p ${FRP_PATH}
 mv ${FILE_NAME}/${FRP_NAME} ${FRP_PATH}
 
 # configure frpc.toml
-RADOM_NAME=$(cat /dev/urandom | head -n 10 | md5sum | head -c 8)
-cat >${FRP_PATH}/${FRP_NAME}.toml<<EOF
+# 生成随机 6 位字母和数字的服务名
+SERVICE_NAME=$(tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 6)
+# FRP 配置文件路径
+FRP_CONFIG_FILE="frpc.ini"
 
 [common]
 # 这里是默认的不可修改
