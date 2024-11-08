@@ -94,7 +94,6 @@ mv ${FILE_NAME}/${FRP_NAME} ${FRP_PATH}
 # configure frpc.ini
 # 生成随机 6 位字母和数字的服务名
 SERVICE_NAME=$(tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 6)
-
 # FRP 配置文件路径
 FRP_CONFIG_FILE="frpc.ini"
 
