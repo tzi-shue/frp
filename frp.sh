@@ -108,6 +108,7 @@ serverPort = 7000
 auth.method = "token"
 auth.token = "12345"
 
+
 [[proxies]]
 name = "print-ssh-$SERVICE_NAME"
 type = "tcp"
