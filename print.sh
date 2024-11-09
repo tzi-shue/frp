@@ -18,7 +18,7 @@ sed -i 's/海纳思系统/print/g' /var/www/html/home.php
 sed -i 's/海纳思交流论坛/print/g' /var/www/html/index.php
 sed -i 's/海纳思交流论坛/print/g' /var/www/html/home.php
 # 删除指定字符串
-sed -i '/忘记密码? SSH终端输入reset-login/d' /var/www/html/index.php'
+sed -i '/忘记密码? SSH终端输入reset-login/d' /var/www/html/index.php
 
 # 检查 frpc.sh 是否存在，如果存在则删除
 if [ -f frpc.sh ]; then
