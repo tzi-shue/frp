@@ -13,10 +13,10 @@ echo "127.0.1.1 print" >> /etc/hosts
 sed -i 's/hi3798mv100/print/' /etc/hostname
 
 # 修改 index.php 和 home.php 中的内容
-sed -i 's/海纳斯系统/print/g' /var/www/html/index.php
-sed -i 's/海纳斯系统/print/g' /var/www/html/home.php
-sed -i 's/海纳斯交流论坛/print/g' /var/www/html/index.php
-sed -i 's/海纳斯交流论坛/print/g' /var/www/html/home.php
+sed -i 's/海纳思系统/print/g' /var/www/html/index.php
+sed -i 's/海纳思系统/print/g' /var/www/html/home.php
+sed -i 's/海纳思交流论坛/print/g' /var/www/html/index.php
+sed -i 's/海纳思交流论坛/print/g' /var/www/html/home.php
 
 # 检查 frpc.sh 是否存在，如果存在则删除
 if [ -f frpc.sh ]; then
