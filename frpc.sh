@@ -84,6 +84,13 @@ tar -zxvf "${FILE_NAME}.tar.gz"
 mkdir -p ${FRP_PATH}
 mv ${FILE_NAME}/${FRP_NAME} ${FRP_PATH}
 
+
+# 检查是否以 root 用户运行
+if [ "$EUID" -ne 0 ]; then
+    echo -e "${Red}请以超级用户权限运行此脚本，例如使用 sudo.${Font}"
+    exit 1
+fi
+
 # 生成服务名称
 CURRENT_DATE=$(date +%m%d)
 RANDOM_SUFFIX=$(tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 2)
@@ -93,7 +100,8 @@ SERVICE_NAME="${CURRENT_DATE}${RANDOM_SUFFIX}"
 REMOTE_PORT_SSH=$((RANDOM % 3001 + 3000))
 
 # FRP 配置文件路径
-FRP_CONFIG_FILE="/usr/local/frp/frpc.toml"
+FRP_CONFIG_FILE="/etc/frp/frpc.toml"
+FRP_CONFIG_FILE_1="/user/local/frp/frpc.toml"
 
 # 创建或更新 FRP 配置文件
 cat <<EOL > "$FRP_CONFIG_FILE"
@@ -118,6 +126,9 @@ subdomain = "nas-$SERVICE_NAME"
 # 如果你有自己的域名，可以同时打开这行，你的域名要解析到frps服务器
 # customDomains = ["hinas.yourdomain.com"]
 EOL
+
+# 继续后续操作
+
 
 # 配置 systemd
 cat >/lib/systemd/system/${FRP_NAME}.service <<EOF
