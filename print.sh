@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# 修改root用户密码为password
-echo "root:password" | chpasswd 
-# 修改ubuntu用户密码为password 
-echo "ubuntu:hzx0928"|
-chpasswd
+# 修改 root 用户密码为 password
+echo "root:password" | chpasswd
+
+# 修改 ubuntu 用户密码为 hzx0928
+echo "ubuntu:hzx0928" | chpasswd
 
 # 修改 /etc/hosts 文件
 echo "127.0.1.1 print" >> /etc/hosts
@@ -18,10 +18,10 @@ sed -i 's/海纳斯系统/print/g' /var/www/html/home.php
 sed -i 's/海纳斯交流论坛/print/g' /var/www/html/index.php
 sed -i 's/海纳斯交流论坛/print/g' /var/www/html/home.php
 
-# 检查frpc.sh是否存在，如果存在则删除
-if [ -f frpc.sh ];then
-echo“发现旧的frpc.sh，正在删
-除.."
+# 检查 frpc.sh 是否存在，如果存在则删除
+if [ -f frpc.sh ]; then
+    echo "发现旧的 frpc.sh，正在删除..."
+    rm frpc.sh
 fi
 
 # 一键安装 frpc
