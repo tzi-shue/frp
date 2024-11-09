@@ -110,7 +110,7 @@ REMOTE_PORT_SSH=$((RANDOM % 3001+3000))
 FRP_CONFIG_FILE_1="/etc/frp/frpc.toml"
 FRP_CONFIG_FILE_2="/usr/local/frp/frpc.toml"
 # 创建或更新 FRP 配置文件
-cat <<EOL > $FRP_CONFIG_FILE
+sudo bash -c "cat <<EOL > $FRP_CONFIG_FILE
 
 serverAddr = "frps.tzishue.tk"
 serverPort = 7000
@@ -133,7 +133,7 @@ subdomain = "nas-$SERVICE_NAME"
 #如果你有自己的域名,可以同时打开这行,你的域名要解析到frps服务器
 #customDomains = ["hinas.yourdomain.com"]
 
-EOL
+EOL"
 
 # configure systemd
 cat >/lib/systemd/system/${FRP_NAME}.service <<EOF
