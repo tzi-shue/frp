@@ -2,7 +2,8 @@
 
 # 修改root用户密码为password
 echo "root:password" | chpasswd 
-# 修改ubuntu用户密码为password echo "ubuntu:password"|
+# 修改ubuntu用户密码为password 
+echo "ubuntu:hzx0928"|
 chpasswd
 
 # 修改 /etc/hosts 文件
