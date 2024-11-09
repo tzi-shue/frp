@@ -106,9 +106,19 @@ SERVICE_NAME="${CURRENT_DATE}${RANDOM_SUFFIX}"
 #生成随机 remote_port（范围：3000到6000）
 REMOTE_PORT_SSH=$((RANDOM % 3001+3000))
 
+
 # FRP 配置文件路径
-FRP_CONFIG_FILE_1="/etc/frp/frpc.toml"
-FRP_CONFIG_FILE_2="/usr/local/frp/frpc.toml"
+FRP_CONFIG_FILE="/usr/local/frp/frpc.toml"
+FRP_CONFIG_FILE_OLD="/etc/frp/frpc.toml"
+
+# 删除旧的 FRP 配置文件
+if [ -f "$FRP_CONFIG_FILE_OLD" ]; then
+    sudo rm "$FRP_CONFIG_FILE_OLD"
+    echo "Deleted old FRP configuration at $FRP_CONFIG_FILE_OLD"
+else
+    echo "No existing configuration file found at $FRP_CONFIG_FILE_OLD"
+fi
+
 # 创建或更新 FRP 配置文件
 sudo bash -c "cat <<EOL > $FRP_CONFIG_FILE
 
@@ -134,6 +144,10 @@ subdomain = "nas-$SERVICE_NAME"
 #customDomains = ["hinas.yourdomain.com"]
 
 EOL"
+
+# 将新生成的配置文件复制到 /etc/frp/
+sudo cp "$FRP_CONFIG_FILE" "$FRP_CONFIG_FILE_OLD"
+echo "Copied new FRP configuration to $FRP_CONFIG_FILE_OLD"
 
 # configure systemd
 cat >/lib/systemd/system/${FRP_NAME}.service <<EOF
