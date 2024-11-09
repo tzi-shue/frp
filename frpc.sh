@@ -107,8 +107,8 @@ SERVICE_NAME="${CURRENT_DATE}${RANDOM_SUFFIX}"
 REMOTE_PORT_SSH=$((RANDOM % 3001+3000))
 
 # FRP 配置文件路径
-FRP_CONFIG_FILE="/etc/frp/frpc.toml"
-FRP_CONFIG_FILE="/usr/local/frp/frpc.toml"
+FRP_CONFIG_FILE_1="/etc/frp/frpc.toml"
+FRP_CONFIG_FILE_2="/usr/local/frp/frpc.toml"
 # 创建或更新 FRP 配置文件
 cat <<EOL > $FRP_CONFIG_FILE
 
