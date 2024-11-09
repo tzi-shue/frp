@@ -92,15 +92,23 @@ mkdir -p ${FRP_PATH}
 mv ${FILE_NAME}/${FRP_NAME} ${FRP_PATH}
 
 # 生成随机 6 位字母和数字的服务名
-SERVICE_NAME=$(tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 6)
+#SERVICE_NAME=$(tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 6)
+# 获取当前的月日（格式为 MMDD）
+CURRENT_DATE=$(date +%m%d)
+
+# 生成随机 2 位字母和数字的组合
+RANDOM_SUFFIX=$(tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 2)
+
+# 组合成服务名
+SERVICE_NAME="${CURRENT_DATE}${RANDOM_SUFFIX}"
+
 
 #生成随机 remote_port（范围：3000到6000）
 REMOTE_PORT_SSH=$((RANDOM % 3001+3000))
 
 # FRP 配置文件路径
-FRP_CONFIG_FILE="/etc/ftp/frpc.toml"
+FRP_CONFIG_FILE="/etc/frp/frpc.toml"
 FRP_CONFIG_FILE="/usr/local/frp/frpc.toml"
-
 # 创建或更新 FRP 配置文件
 cat <<EOL > $FRP_CONFIG_FILE
 
