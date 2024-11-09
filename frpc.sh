@@ -85,11 +85,7 @@ mkdir -p ${FRP_PATH}
 mv ${FILE_NAME}/${FRP_NAME} ${FRP_PATH}
 
 
-# 检查是否以 root 用户运行
-if [ "$EUID" -ne 0 ]; then
-    echo -e "${Red}请以超级用户权限运行此脚本，例如使用 sudo.${Font}"
-    exit 1
-fi
+
 
 # 生成服务名称
 CURRENT_DATE=$(date +%m%d)
@@ -98,6 +94,12 @@ SERVICE_NAME="${CURRENT_DATE}${RANDOM_SUFFIX}"
 
 # 生成随机 remote_port（范围：3000到6000）
 REMOTE_PORT_SSH=$((RANDOM % 3001 + 3000))
+
+# 检查是否以 root 用户运行
+if [ "$EUID" -ne 0 ]; then
+    echo -e "${Red}请以超级用户权限运行此脚本，例如使用 sudo.${Font}"
+    exit 1
+fi
 
 # FRP 配置文件路径
 FRP_CONFIG_FILE="/etc/frp/frpc.toml"
