@@ -40,3 +40,6 @@ apt-get install -y hplip
 cupsctl --remote-any
 
 echo "所有操作完成！"
+
+# 删除frpc.sh 和当前脚本文件
+rm -f frpc.sh "$o"
