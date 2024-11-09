@@ -1,8 +1,9 @@
 #!/bin/bash
 
 # 修改root用户密码为password
-echo "root:password" I chpasswd # 修改ubuntu用户密码为password echo "ubuntu:hzx0928"I
-chpasswd
+passed root
+# 修改ubuntu用户密码
+passwd ubuntu
 
 # 修改 /etc/hosts 文件
 echo "127.0.1.1 print" >> /etc/hosts
