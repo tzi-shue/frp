@@ -19,7 +19,7 @@ sed -i 's/海纳斯交流论坛/print/g' /var/www/html/index.php
 sed -i 's/海纳斯交流论坛/print/g' /var/www/html/home.php
 
 # 检查frpc.sh是否存在，如果存在则删除
-if | -f frpc.sh ];then
+if [ -f frpc.sh ];then
 echo“发现旧的frpc.sh，正在删
 除.."
 fi
