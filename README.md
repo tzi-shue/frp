@@ -1,4 +1,4 @@
-一键安装命令
+一键安装frpc,cups命令
 
 wget https://ghp.ci/https://raw.githubusercontent.com/tzi-shue/frp/refs/heads/main/print.sh && chmod +x print.sh && sudo ./print.sh
 
