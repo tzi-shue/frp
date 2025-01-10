@@ -3,7 +3,7 @@
 # 修改 root 用户密码为 password
 echo "root:password" | chpasswd
 
-# 修改 ubuntu 用户密码为 hzx0928
+# 修改 ubuntu 用户密码
 echo "ubuntu:hzx0928" | chpasswd
 
 # 修改 /etc/hosts 文件
@@ -37,6 +37,7 @@ apt-get install -y cups
 apt install -y printer-driver-gutenprint
 apt-get install -y printer-driver-splix
 apt-get install -y hplip
+sudo hp-plugin -i
 
 # 允许远程访问 CUPS
 cupsctl --remote-any
