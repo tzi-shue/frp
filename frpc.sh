@@ -103,7 +103,7 @@ fi
 
 # FRP 配置文件路径
 FRP_CONFIG_FILE="/etc/frp/frpc.toml"
-FRP_CONFIG_FILE_1="/user/local/frp/frpc.toml"
+FRP_CONFIG_FILE_1="/usr/local/frp/frpc.toml"
 
 # 创建或更新 FRP 配置文件
 cat <<EOL > "$FRP_CONFIG_FILE"
