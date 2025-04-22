@@ -142,6 +142,7 @@ ExecStart=/usr/local/frp/${FRP_NAME} -c /usr/local/frp/${FRP_NAME}.toml
 
 [Install]
 WantedBy=multi-user.target
+
 EOF
 
 # finish install
