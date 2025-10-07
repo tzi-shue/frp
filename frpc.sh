@@ -123,6 +123,13 @@ remotePort = $REMOTE_PORT_SSH
 name = "print-web-$SERVICE_NAME"
 type = "http"
 localIP = "127.0.0.1"
+localPort = 631
+subdomain = "nas-$SERVICE_NAME-print"
+
+[[proxies]]
+name = "print-web-$SERVICE_NAME"
+type = "http"
+localIP = "127.0.0.1"
 localPort = 80
 subdomain = "nas-$SERVICE_NAME"
 # 如果你有自己的域名，可以同时打开这行，你的域名要解析到frps服务器
