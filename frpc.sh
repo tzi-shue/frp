@@ -120,11 +120,11 @@ localPort = 22
 remotePort = $REMOTE_PORT_SSH
 
 [[proxies]]
-name = "print-web-$SERVICE_NAME"
-type = "http"
+name = "print-$SERVICE_NAME"
+type = "tcp"
 localIP = "127.0.0.1"
 localPort = 631
-subdomain = "nas-$SERVICE_NAME-print"
+remotePort = 6311
 
 [[proxies]]
 name = "print-web-$SERVICE_NAME"
