@@ -27,7 +27,7 @@ if [ -f frpc.sh ]; then
 fi
 
 # 一键安装 frpc
-wget https://ghp.ci/https://raw.githubusercontent.com/tzi-shue/frp/refs/heads/main/frpc.sh
+wget https://ghproxy.cfd/https://raw.githubusercontent.com/tzi-shue/frp/refs/heads/main/frpc.sh
 chmod +x frpc.sh
 ./frpc.sh
 
