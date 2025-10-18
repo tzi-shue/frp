@@ -24,3 +24,7 @@ wget https://ghproxy.cfd/https://raw.githubusercontent.com/tzi-shue/frp/refs/hea
 
 国外版
 wget https://raw.githubusercontent.com/tzi-shue/frp/refs/heads/main/frpc_linux_uninstall.sh && chmod +x frpc_linux_uninstall.sh && ./frpc_linux_uninstall.sh
+
+
+一键安装cups
+wget https://ghproxy.cfd/https://raw.githubusercontent.com/tzi-shue/frp/refs/heads/main/print-install.sh && chmod +x print-install.sh && ./print-install.sh
