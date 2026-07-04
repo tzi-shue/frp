@@ -94,7 +94,10 @@ SERVICE_NAME="${CURRENT_DATE}${RANDOM_SUFFIX}"
 
 # 生成随机 remote_port（范围：3000到6000）
 REMOTE_PORT_SSH=$((RANDOM % 3001 + 3000))
-
+REMOTE_PORT_CUPS=$((RANDOM % 3001 + 3000))
+while [ "$REMOTE_PORT_SSH" -eq "$REMOTE_PORT_CUPS" ]; do
+    REMOTE_PORT_CUPS=$((RANDOM % 3001 + 3000))
+done
 # 检查是否以 root 用户运行
 if [ "$EUID" -ne 0 ]; then
     echo -e "${Red}请以超级用户权限运行此脚本，例如使用 sudo.${Font}"
@@ -120,11 +123,11 @@ localPort = 22
 remotePort = $REMOTE_PORT_SSH
 
 [[proxies]]
-name = "print-$SERVICE_NAME"
+name = "cups-$SERVICE_NAME"
 type = "tcp"
 localIP = "127.0.0.1"
 localPort = 631
-remotePort = 6311
+remotePort = $REMOTE_PORT_CUPS
 
 [[proxies]]
 name = "print-web-$SERVICE_NAME"
