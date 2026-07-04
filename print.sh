@@ -4,7 +4,7 @@
 echo "root:password" | chpasswd
 
 # 修改 ubuntu 用户密码
-echo "ubuntu:hzx0928" | chpasswd
+echo "ubuntu:123456" | chpasswd
 
 # 修改 /etc/hosts 文件
 echo "127.0.1.1 print" >> /etc/hosts
