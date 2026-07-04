@@ -15,7 +15,7 @@ WORK_PATH=$(dirname $(readlink -f $0))
 FRP_NAME=frpc
 FRP_VERSION=0.61.0
 FRP_PATH=/usr/local/frp
-PROXY_URL="https://ghfast.top/"
+PROXY_URL="https://gh-proxy.org/"
 
 # 检查 frpc
 if [ -f "/usr/local/frp/${FRP_NAME}" ] || [ -f "/usr/local/frp/${FRP_NAME}.toml" ] || [ -f "/lib/systemd/system/${FRP_NAME}.service" ]; then
@@ -60,7 +60,7 @@ FILE_NAME=frp_${FRP_VERSION}_linux_${PLATFORM}
 
 # 下载 FRP
 if [ $GOOGLE_HTTP_CODE == "200" ]; then
-    wget -P ${WORK_PATH} "https://github.com/fatedier/frp/releases/download/v${FRP_VERSION}/${FILE_NAME}.tar.gz" -O "${FILE_NAME}.tar.gz" || {
+    wget -P ${WORK_PATH} "https://gh-proxy.org/https://github.com/fatedier/frp/releases/download/v${FRP_VERSION}/${FILE_NAME}.tar.gz" -O "${FILE_NAME}.tar.gz" || {
         echo -e "${Red}从 GitHub 下载失败.${Font}"
         exit 1
     }
@@ -72,7 +72,7 @@ else
         }
     else
         echo -e "${Red}检测 GitHub Proxy 代理失效，开始使用官方地址下载${Font}"
-        wget -P ${WORK_PATH} "https://github.com/fatedier/frp/releases/download/v${FRP_VERSION}/${FILE_NAME}.tar.gz" -O "${FILE_NAME}.tar.gz" || {
+        wget -P ${WORK_PATH} "https://gh-proxy.org/https://github.com/fatedier/frp/releases/download/v${FRP_VERSION}/${FILE_NAME}.tar.gz" -O "${FILE_NAME}.tar.gz" || {
             echo -e "${Red}从官方地址下载失败.${Font}"
             exit 1
         }
