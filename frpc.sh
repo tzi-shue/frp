@@ -110,7 +110,7 @@ FRP_CONFIG_FILE_1="/usr/local/frp/frpc.toml"
 
 # 创建或更新 FRP 配置文件
 cat <<EOL > "$FRP_CONFIG_FILE"
-serverAddr = "frps.tzishue.tk"
+serverAddr = "frps.htzi.eu.org"
 serverPort = 7000
 auth.method = "token"
 auth.token = "12345"
